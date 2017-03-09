@@ -3,13 +3,15 @@ const app = express();
 const bodyParser = require("body-parser");
 const multer = require('multer');
 const shortid = require('shortid');
-const ProgressBar = require('progress');
+//const progress = require('progress-stream');
+
+
 
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
 //app.upload = multer({ dest: './uploads/' })
+
 
 let maxSize = 2 * 1024 * 1024; //2MB
 
@@ -29,7 +31,6 @@ function fileFilter(req, file, cb) {
     } else {
         cb(new Error(ext + ' is not accepted')); //Error
     }
-
 }
 
 app.upload = multer({
@@ -41,15 +42,20 @@ app.upload = multer({
     }
 });
 
+
+
 require('./routers/routers')(app);
 
 const server = app.listen(1234, () => {
     console.log('Start')
 });
 
+
 app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('Error: ' + err.message)
 });
+
+
 
 module.exports = server;
