@@ -17,11 +17,8 @@ describe('Upload photo file', () => {
             .expect(200)
             .end( (err, res) => {
                 let image = res.body.image;
-                let name_split = image.split('.');
-                let img_name = name_split[0];
-                let img_ext = name_split[1];
-                let name_old = img_name.split('-')[1];
-                console.log(name_old + '.' + img_ext);
+                let image_name = image.split('/')[1];
+                console.log(image_name);
                 done();
             })
     })
